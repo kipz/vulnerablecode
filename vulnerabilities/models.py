@@ -88,6 +88,13 @@ class Vulnerability(models.Model):
         """
         return self.patched_packages.all().distinct()
 
+    @property
+    def vulnerabilityreference_set(self):
+        """
+        Returns refernces to this vulnerability
+        """
+        return self.references.all().distinct()
+
     def __str__(self):
         return self.vulnerability_id or self.summary
 
@@ -101,7 +108,7 @@ class VulnerabilityReference(models.Model):
     package manager.
     """
 
-    vulnerability = models.ForeignKey(Vulnerability, on_delete=models.CASCADE)
+    vulnerability = models.ForeignKey(Vulnerability, on_delete=models.CASCADE, related_name='references')
     reference_id = models.CharField(
         max_length=50, help_text="Reference ID, eg:DSA-4465-1", blank=True
     )
