@@ -179,8 +179,21 @@ class VulnerabilityFilterSet(filters.FilterSet):
 
 
 class VulnerabilityViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Vulnerability.objects.all()
+    queryset = (
+        Vulnerability.objects
+        .prefetch_related(
+           # 'references',
+            #'patched_packages',
+            'vulnerable_packages'
+        )
+    )
     serializer_class = VulnerabilitySerializer
     paginate_by = 50
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = VulnerabilityFilterSet
+    # def dispatch(self, *args, **kwargs):
+    #     response = super().dispatch(*args, **kwargs)
+    #     # For debugging purposes only.
+    #     from django.db import connection
+    #     print('# of Queries: {}'.format(len(connection.queries)))
+    #     return response
