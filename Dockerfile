@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM python:3.8@sha256:cfc20f61c55d9bc9ace67726b202b41d1344ef63202c73c221e102eb6a7b2c46
 # PYTHONUNBUFFERED=1 ensures that the python output is set straight
 # to the terminal without buffering it first
 ENV PYTHONUNBUFFERED 1
